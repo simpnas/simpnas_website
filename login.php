@@ -4,10 +4,10 @@
     
   if(isset($_POST['login'])){
 
-      $username = mysqli_real_escape_string($mysqli,$_POST['username']);
-      $password = mysqli_real_escape_string($mysqli,$_POST['password']);
+      $email = mysqli_real_escape_string($mysqli,$_POST['email']);
+      $password = md5($_POST['password']);
 
-      $sql = mysqli_query($mysqli,"SELECT * FROM users WHERE username = '$username' AND password = '$password' AND user_access > 0");
+      $sql = mysqli_query($mysqli,"SELECT * FROM users WHERE user_email = '$email' AND user_password = '$password' AND user_access > 0");
       
       if(mysqli_num_rows($sql) == 1){
           $row = mysqli_fetch_array($sql);
@@ -39,10 +39,10 @@
     <title>Login</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="signin.css" rel="stylesheet">
+    <link href="css/signin.css" rel="stylesheet">
   </head>
 
   <body class="text-center">
@@ -56,7 +56,7 @@
         
       ?>
       <label for="inputEmail" class="sr-only">Username</label>
-      <input type="text" id="inputEmail" name="username" class="form-control" placeholder="Username" required autofocus>
+      <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email" required autofocus>
       <label for="inputPassword" class="sr-only">Password</label>
       <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
       <button class="btn btn-lg btn-primary btn-block" name="login" type="submit">Sign in</button>
@@ -64,10 +64,8 @@
   <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    <script src="assets/js/vendor/popper.min.js"></script>
-    <script src="dist/js/bootstrap.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <script>
       feather.replace()
     </script>

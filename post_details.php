@@ -5,13 +5,13 @@
 	include "check_login.php";
 	
 	if(isset($_GET['post_id'])){
-	  	$post_id = intval($_GET['post_id']);
-	  	$sql = mysqli_query($mysqli,"SELECT * FROM posts, users WHERE post_id = $post_id AND posts.user_id = users.user_id");
-	  	$row = mysqli_fetch_array($sql);
-	    $post_topic = $row['post_topic'];
-	    $post_body = $row['post_body'];
-	    $post_date = date($config_date_format,$row['post_date']);
-	    $username = $row['username'];
+  	$post_id = intval($_GET['post_id']);
+  	$sql = mysqli_query($mysqli,"SELECT * FROM posts, users WHERE post_id = $post_id AND posts.user_id = users.user_id");
+  	$row = mysqli_fetch_array($sql);
+    $post_topic = $row['post_topic'];
+    $post_body = $row['post_body'];
+    $post_date = date($config_date_format,$row['post_date']);
+    $username = $row['username'];
 	}
 
 	$sql = mysqli_query($mysqli,"SELECT * FROM posts, users WHERE users.user_id = posts.user_id");

@@ -24,25 +24,25 @@
 		</thead>
 	    <tbody>
 			
-	        <?php
+	      <?php
 
 				while($row = mysqli_fetch_array($sql)){
-	                $post_id = $row['post_id'];
-	                $username = $row['username'];
-	                $post_topic = $row['post_topic'];
-	                $post_date = date($config_date_format,$row['post_date']);
-	                $sql2 = mysqli_query($mysqli,"SELECT * FROM replies,users WHERE users.user_id = replies.user_id AND post_id = $post_id ORDER BY reply_id DESC");
-	                $replies = mysqli_num_rows($sql2);
-	                $row2 = mysqli_fetch_array($sql2);
-	                $reply_id = $row2['reply_id'];
-	                $reply_username = $row2['username'];
-	                $reply_body = $row2['reply_body'];
-	                $reply_date = date($config_date_format,$row2['reply_date']);               
-	         ?>
+          $post_id = $row['post_id'];
+          $username = $row['username'];
+          $post_topic = $row['post_topic'];
+          $post_date = date($config_date_format,$row['post_date']);
+          $sql2 = mysqli_query($mysqli,"SELECT * FROM replies, users WHERE users.user_id = replies.user_id AND post_id = $post_id ORDER BY reply_id DESC");
+          $replies = mysqli_num_rows($sql2);
+          $row2 = mysqli_fetch_array($sql2);
+          $reply_id = $row2['reply_id'];
+          $reply_username= $row2['username'];
+          $reply_body = $row2['reply_body'];
+          $reply_date = date($config_date_format,$row2['reply_date']);               
+	        ?>
 						<tr>
 							<td>
 								<a href="post_details.php?post_id=<?php echo $post_id; ?>"><?php echo $post_topic; ?></a>
-								<p>by <?php echo $username; ?> <?php echo $post_date; ?></p>
+								<p class="text-secondary">by <?php echo $username; ?> <?php echo $post_date; ?></p>
 							</td>
 							<td><?php echo $replies; ?></td>
 							<td>
