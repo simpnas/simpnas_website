@@ -2,7 +2,7 @@
 	
 	$dbhost = "localhost";
 	$dbusername = "johnny_simpnas";
-	$dbpassword = "cf3TA2VMS6y8CntM";
+	$dbpassword = "N25yVdNghtJ42zeL";
 	$database = "johnny_simpnas";
 
 	$mysqli = mysqli_connect($dbhost, $dbusername, $dbpassword, $database);
