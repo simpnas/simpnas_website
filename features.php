@@ -3,43 +3,32 @@
 <h1>Features</h1>
 
 <ul>
-  <li>Only need a single Drive. A single Drive will support Data and OS</li>
   <li>Simple to use web interface for configuration</li>
   <li>Disk Management</li>
+  <li>LUKS Encrypted Volumes</li>
+  <li>RAID Configuration</li>
   <li>Disk Health monitoring using SMART</li>
   <li>Network Shares using SAMBA</li>
   <li>Group Access Control</li>
-  <li>Remote Access with a VPN Server Using Wireguard</li>
   <li>Private Torrent Downloads using Transmission with VPN Support</li>
   <li>Media organization and sharing using Jellyfin</li>
   <li>Home Automation using Home Assistant</li>
   <li>Manage your unifi Network using Unifi Controller</li>
-  <li>Manage your unifi cameras using Unifi Video</li>
   <li>File Sharing / Groupware using Nextcloud
     <ul>
       <li>Samba User Authentication</li>
       <li>Automatic SMB Mounts in Nextcloud folder</li>
       <li>Automount Users home Directory in nextcloud</li>
-      <li>Automatic Initial Installation with MariaDB by default</li>
     </ul>
   </li>
-  <li>Bitwarden Integrated</li>
-  <li>NGINX proxy for External Webapps with LetsEncrypt Certificates such as jellyfin and Nextcloud</li>
-  <li>Acrive Directory Support (Still WIP)
-    <ul>
-      <li>Password Policies</li>
-      <li>Central Authentication</li>
-      <li>Ability for Windows PCs to join domain</li>
-      <li>Home Drive Automapping H: Users Home</li>
-    </ul>
-  </li>
+  <li>Bitwarden Application included</li>
+  
 </ul>
 
 <h2>Planned Features</h2>
 <ul>
-  <li>LUKS Encrypted Volumes</li>
-  <li>RAID Configuration</li>
-  <li>Backups using RSYNC</li>
+  <li>NGINX proxy for External Webapps with LetsEncrypt Certificates such as jellyfin and Nextcloud</li>
+  <li>Versioned Backups using RSYNC</li>
   <li>Email Notification / Alert</li>
     <ul>
       <li>SMART Check Fails</li>
