@@ -121,6 +121,45 @@ if(isset($_GET['delete_page'])){
 
 }
 
+if(isset($_POST['add_link'])){
+	$name = trim(strip_tags(mysqli_real_escape_string($mysqli,$_POST['name'])));
+	$url = trim(mysqli_real_escape_string($mysqli,$_POST['url']));
+
+	mysqli_query($mysqli,"INSERT INTO links SET link_name = '$name', link_url = '$url'") OR DIE("ERROR!");
+
+	header("Location: links.php");
+
+}
+
+if(isset($_POST['edit_link'])){
+	$link_id = intval($_POST['link_id']);
+	$name = trim(strip_tags(mysqli_real_escape_string($mysqli,$_POST['name'])));
+	$url = trim(mysqli_real_escape_string($mysqli,$_POST['url']));
+
+	mysqli_query($mysqli,"UPDATE links SET link_name = '$name', link_url = '$url' WHERE link_id = $link_id");
+
+	$_SESSION['response'] = "
+		<div class='alert alert-info'>
+		    Link updated.
+		    <button class='close' data-dismiss='alert'>
+				<span>&times;</span>
+			</button>
+		</div>
+	";
+
+	header("Location: edit_link.php?link_id=$link_id");
+
+}
+
+if(isset($_GET['delete_link'])){
+	$link_id = intval($_GET['delete_link']);
+
+	mysqli_query($mysqli,"DELETE FROM links WHERE link_id = $link_id");
+
+	header("Location: links.php");
+
+}
+
 if(isset($_POST['add_file'])){
 
   if($_FILES['file']['tmp_name']!='') {

@@ -1,4 +1,7 @@
-<?php $query = mysqli_query($mysqli,"SELECT page_title FROM pages WHERE page_active = 1 ORDER BY page_order ASC"); ?>
+<?php 
+  $query = mysqli_query($mysqli,"SELECT page_title FROM pages WHERE page_active = 1 ORDER BY page_order ASC");
+  $query_links = mysqli_query($mysqli,"SELECT * FROM links ORDER BY link_name ASC"); 
+?>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
   <a class="navbar-brand" href="index.php"><?php echo $config_site_name; ?></a>
@@ -18,6 +21,21 @@
 
       <li class="nav-item">
         <a class="nav-link <?php if($_GET["page"] == $title) { echo "active"; } ?>" href="index.php?page=<?php echo $title; ?>"><?php echo ucwords($title); ?></a>
+      </li>
+
+      <?php } ?>
+
+      <?php 
+
+      while($row = mysqli_fetch_array($query_links)){
+      
+      $name = $row['link_name'];
+      $url = $row['link_url'];
+    
+      ?>
+
+      <li class="nav-item">
+        <a class="nav-link" href="<?php echo $url; ?>" target="_blank"><?php echo ucwords($name); ?></a>
       </li>
 
       <?php } ?>

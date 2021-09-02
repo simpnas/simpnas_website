@@ -12,6 +12,9 @@
       <li class="nav-item">
         <a class="nav-link <?php if(basename($_SERVER["PHP_SELF"]) == "pages.php" OR basename($_SERVER["PHP_SELF"]) == "add_page.php" OR basename($_SERVER["PHP_SELF"]) == "edit_page.php") { echo "active"; } ?>" href="pages.php">Pages</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link <?php if(basename($_SERVER["PHP_SELF"]) == "links.php" OR basename($_SERVER["PHP_SELF"]) == "add_link.php" OR basename($_SERVER["PHP_SELF"]) == "edit_link.php") { echo "active"; } ?>" href="links.php">Links</a>
+      </li>
       <?php if($config_module_blog_enabled == 1){ ?>
       <li class="nav-item">
         <a class="nav-link <?php if(basename($_SERVER["PHP_SELF"]) == "blogs.php" OR basename($_SERVER["PHP_SELF"]) == "add_blog.php" OR basename($_SERVER["PHP_SELF"]) == "edit_blog.php") { echo "active"; } ?>" href="blogs.php">Blogs</a>
