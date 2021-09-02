@@ -17,7 +17,7 @@ session_start();
 
 ?>
 
-<form action="post.php" method="post">
+<form action="unprotected_post.php" method="post">
 
 	<div class="form-group">
 		<label>Email</label>

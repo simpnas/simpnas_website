@@ -1,15 +1,38 @@
 <?php
 	
+	//Database Configuration 
 	$dbhost = "";
 	$dbusername = "";
 	$dbpassword = "";
 	$database = "";
 
+	//Database Connection (Do not modify)
 	$mysqli = mysqli_connect($dbhost, $dbusername, $dbpassword, $database);
-	$config_date_format = "Y-m-d h:i a";
-	$config_app_name = "SimpNAS Website";
-	$config_login_message = "Authorized Use Only!";
-	$config_max_records_per_page = 5;
-	$config_theme = "skin-blue";
+	
+	//Basic Configuration
+	$config_site_name = "";
+	$config_theme = "";
+	$config_date_time_format = "Y-m-d h:i a";
+
+	$config_footer_right = "";
+
+	//Social
+	$config_social_github = "";
+	$config_social_twitter = "";
+	$config_social_reddit = "";
+
+	//Meta Data
+	$config_meta_description = "";
+	$config_meta_author = ""; 
+
+	//Modules
+	$config_module_docs_enabled = 1;
+	$config_module_forum_enabled = 1;
+	$config_module_blog_enabled = 1;
+	$config_module_polls_enabled = 1;
+	$config_module_uploads_enabled = 1;
+	$config_module_stats_enabled = 1;
+	$config_module_user_registration_enabled = 1;
+	$config_module_user_registration_auto_activation_enabled = 1;
 
 ?>

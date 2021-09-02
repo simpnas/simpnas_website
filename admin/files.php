@@ -24,7 +24,7 @@ if(isset($_GET['search'])){
 if(isset($_GET['sortby'])){
   $sortby = mysqli_real_escape_string($mysqli,$_GET['sortby']);
 }else{
-  $sortby = "page_title";
+  $sortby = "file_name";
 }
 
 if(isset($_GET['order'])){
@@ -39,8 +39,8 @@ if(isset($_GET['order'])){
 
 $url_query_strings_sb = http_build_query(array_merge($_GET,array('sortby' => $sortby, 'order' => $order)));
 
-$query = mysqli_query($mysqli,"SELECT SQL_CALC_FOUND_ROWS * FROM pages
-	WHERE page_title LIKE '%$search%'
+$query = mysqli_query($mysqli,"SELECT SQL_CALC_FOUND_ROWS * FROM files
+	WHERE file_name LIKE '%$search%'
 	ORDER BY $sortby $order
 	LIMIT $record_from, $record_to"); 
 
@@ -48,7 +48,7 @@ $num_rows = mysqli_fetch_row(mysqli_query($mysqli,"SELECT FOUND_ROWS()"));
 
 ?>
 
-<h1>Pages</h1>
+<h1>Files</h1>
 
 <hr>
 
@@ -61,7 +61,7 @@ $num_rows = mysqli_fetch_row(mysqli_query($mysqli,"SELECT FOUND_ROWS()"));
 			</div>
 		</div>
 		<div class="col-md-2 mb-3">
-			<a href="add_page.php" class="btn btn-primary btn-block">New Page</a>
+			 <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#addFileModal">Upload File</button>
 		</div>
 	</div>
 </form>
@@ -71,11 +71,8 @@ $num_rows = mysqli_fetch_row(mysqli_query($mysqli,"SELECT FOUND_ROWS()"));
 	<table class="table border">
 		<thead class="thead-light">
 			<tr>
-				<th><a class="text-secondary" href="?<?php echo $url_query_strings_sb; ?>&sortby=page_title&order=<?php echo $order; ?>">Title</a></th>
-				<th><a class="text-secondary" href="?<?php echo $url_query_strings_sb; ?>&sortby=page_created_at&order=<?php echo $order; ?>">Created</a></th>
-				<th><a class="text-secondary" href="?<?php echo $url_query_strings_sb; ?>&sortby=page_updated_at&order=<?php echo $order; ?>">Updated</a></th>
-				<th><a class="text-secondary" href="?<?php echo $url_query_strings_sb; ?>&sortby=page_active&order=<?php echo $order; ?>">Active</a></th>
-				<th><a class="text-secondary" href="?<?php echo $url_query_strings_sb; ?>&sortby=page_order&order=<?php echo $order; ?>">Order</a></th>
+				<th><a class="text-secondary" href="?<?php echo $url_query_strings_sb; ?>&sortby=file_name&order=<?php echo $order; ?>">Name</a></th>
+				<th><a class="text-secondary" href="?<?php echo $url_query_strings_sb; ?>&sortby=file_uploaded_at&order=<?php echo $order; ?>">Upload Date</a></th>
 				<th class="text-center">Action</th>
 			</tr>
 		</thead>
@@ -85,34 +82,24 @@ $num_rows = mysqli_fetch_row(mysqli_query($mysqli,"SELECT FOUND_ROWS()"));
 
 			while($row = mysqli_fetch_array($query)){
 			
-			$page_id = $row['page_id'];
-			$page_order = $row['page_order'];
-			$title = $row['page_title'];
-			$created_at = $row['page_created_at'];
-			$updated_at = $row['page_updated_at'];
-			$active = $row['page_active'];
-		
+			$file_id = $row['file_id'];
+			$name = $row['file_name'];
+			$uploaded_at = $row['file_uploaded_at'];
+
 			?>
 			
 			<tr>	
-				<td>
-			 		<a href="edit_page.php?page_id=<?php echo $page_id; ?>">
-			 			<?php echo $title; ?>
-			 		</a>
-			 	</td>
-				<td><?php echo $created_at; ?></td>
-				<td><?php echo $updated_at; ?></td>
-				<td><?php echo $active; ?></td>
-				<td><?php echo $page_order; ?></td>
+				<td><?php echo $name; ?></td>
+				<td><?php echo $uploaded_at; ?></td>
 			 	<td>
           <div class="dropdown dropleft text-center">
             <button class="btn btn-outline-secondary btn-sm" type="button" data-toggle="dropdown">
               <i class="fas fa-fw fa-ellipsis-h"></i>
             </button>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="edit_page.php?page_id=<?php echo $page_id; ?>">Edit</a>
+              <a class="dropdown-item" href="/upload/<?php echo $name; ?>">Download</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item text-danger" href="post.php?delete_page=<?php echo $page_id; ?>" class="btn btn-outline-danger">Delete</a>
+              <a class="dropdown-item text-danger" href="post.php?delete_file=<?php echo $file_id; ?>" class="btn btn-outline-danger">Delete</a>
             </div>
           </div>
         </td>
@@ -127,6 +114,31 @@ $num_rows = mysqli_fetch_row(mysqli_query($mysqli,"SELECT FOUND_ROWS()"));
 		</tbody>
 	</table>
 
+</div>
+
+<div class="modal" id="addFileModal" tabindex="-1">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Select File</h5>
+        <button type="button" class="close" data-dismiss="modal">
+          <span>&times;</span>
+        </button>
+      </div>
+      <form action="post.php" method="post" enctype="multipart/form-data" autocomplete="off">
+        <div class="modal-body bg-white">    
+          
+          <div class="form-group">
+            <input type="file" class="form-control-file" name="file">
+          </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="submit" name="add_file" class="btn btn-primary">Upload</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 
 <?php

@@ -14,14 +14,14 @@ if(isset($_GET['blog_id'])){
 	$row = mysqli_fetch_array($query);
 	
 	$title = $row['blog_title'];
-	$body = $row['blog_body'];
+	$content = $row['blog_content'];
 
 ?>
 
 <nav>
 	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><a href="blogs.php">Blogs</a></li>
-		<li class="breadcrumb-item active">Edit / <?php echo $title; ?></li>
+		<li class="breadcrumb-item"><a href="blogs.php">Blog Posts</a></li>
+		<li class="breadcrumb-item active"><?php echo $title; ?></li>
 	</ol>
 </nav>
 
@@ -40,9 +40,9 @@ if(isset($_GET['blog_id'])){
 		<input type="text" class="form-control form-control-lg" name="title" value="<?php echo $title; ?>">
 	</div>
 	<div class="form-group">
-		<textarea class="form-control" id="summernote" name="body"><?php echo $body; ?></textarea>
+		<textarea class="form-control" id="summernote" name="content"><?php echo $content; ?></textarea>
 	</div>
-	<button type="submit" class="btn btn-primary btn-lg btn-block" name="edit_blog">Submit</button>
+	<button type="submit" class="btn btn-primary btn-lg btn-block" name="edit_blog">Save</button>
 </form>
 
 <?php 

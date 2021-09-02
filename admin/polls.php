@@ -24,7 +24,7 @@ if(isset($_GET['search'])){
 if(isset($_GET['sortby'])){
   $sortby = mysqli_real_escape_string($mysqli,$_GET['sortby']);
 }else{
-  $sortby = "page_title";
+  $sortby = "poll_created_at";
 }
 
 if(isset($_GET['order'])){
@@ -39,8 +39,8 @@ if(isset($_GET['order'])){
 
 $url_query_strings_sb = http_build_query(array_merge($_GET,array('sortby' => $sortby, 'order' => $order)));
 
-$query = mysqli_query($mysqli,"SELECT SQL_CALC_FOUND_ROWS * FROM pages
-	WHERE page_title LIKE '%$search%'
+$query = mysqli_query($mysqli,"SELECT SQL_CALC_FOUND_ROWS * FROM polls
+	WHERE (poll_name LIKE '%$search%')
 	ORDER BY $sortby $order
 	LIMIT $record_from, $record_to"); 
 
@@ -48,7 +48,7 @@ $num_rows = mysqli_fetch_row(mysqli_query($mysqli,"SELECT FOUND_ROWS()"));
 
 ?>
 
-<h1>Pages</h1>
+<h1>Polls</h1>
 
 <hr>
 
@@ -61,7 +61,7 @@ $num_rows = mysqli_fetch_row(mysqli_query($mysqli,"SELECT FOUND_ROWS()"));
 			</div>
 		</div>
 		<div class="col-md-2 mb-3">
-			<a href="add_page.php" class="btn btn-primary btn-block">New Page</a>
+			<a href="add_poll.php" class="btn btn-primary btn-block">New Poll</a>
 		</div>
 	</div>
 </form>
@@ -71,11 +71,11 @@ $num_rows = mysqli_fetch_row(mysqli_query($mysqli,"SELECT FOUND_ROWS()"));
 	<table class="table border">
 		<thead class="thead-light">
 			<tr>
-				<th><a class="text-secondary" href="?<?php echo $url_query_strings_sb; ?>&sortby=page_title&order=<?php echo $order; ?>">Title</a></th>
-				<th><a class="text-secondary" href="?<?php echo $url_query_strings_sb; ?>&sortby=page_created_at&order=<?php echo $order; ?>">Created</a></th>
-				<th><a class="text-secondary" href="?<?php echo $url_query_strings_sb; ?>&sortby=page_updated_at&order=<?php echo $order; ?>">Updated</a></th>
-				<th><a class="text-secondary" href="?<?php echo $url_query_strings_sb; ?>&sortby=page_active&order=<?php echo $order; ?>">Active</a></th>
-				<th><a class="text-secondary" href="?<?php echo $url_query_strings_sb; ?>&sortby=page_order&order=<?php echo $order; ?>">Order</a></th>
+				<th><a class="text-secondary" href="?<?php echo $url_query_strings_sb; ?>&sortby=poll_name&order=<?php echo $order; ?>">Name</a></th>
+				<th><a class="text-secondary" href="?<?php echo $url_query_strings_sb; ?>&sortby=poll_created_at&order=<?php echo $order; ?>">Created</a></th>
+				<th><a class="text-secondary" href="?<?php echo $url_query_strings_sb; ?>&sortby=user_name&order=<?php echo $order; ?>">Options</a></th>
+				<th><a class="text-secondary" href="?<?php echo $url_query_strings_sb; ?>&sortby=user_name&order=<?php echo $order; ?>">Votes</a></th>
+				<th><a class="text-secondary" href="?<?php echo $url_query_strings_sb; ?>&sortby=user_name&order=<?php echo $order; ?>">Last Vote</a></th>
 				<th class="text-center">Action</th>
 			</tr>
 		</thead>
@@ -85,34 +85,31 @@ $num_rows = mysqli_fetch_row(mysqli_query($mysqli,"SELECT FOUND_ROWS()"));
 
 			while($row = mysqli_fetch_array($query)){
 			
-			$page_id = $row['page_id'];
-			$page_order = $row['page_order'];
-			$title = $row['page_title'];
-			$created_at = $row['page_created_at'];
-			$updated_at = $row['page_updated_at'];
-			$active = $row['page_active'];
-		
+			$poll_id = $row['poll_id'];
+			$name = $row['poll_name'];
+			$created_at = $row['poll_created_at'];
+
 			?>
 			
 			<tr>	
 				<td>
-			 		<a href="edit_page.php?page_id=<?php echo $page_id; ?>">
-			 			<?php echo $title; ?>
+			 		<a href="edit_blog.php?poll_id=<?php echo $poll_id; ?>">
+			 			<?php echo $name; ?>
 			 		</a>
 			 	</td>
 				<td><?php echo $created_at; ?></td>
-				<td><?php echo $updated_at; ?></td>
-				<td><?php echo $active; ?></td>
-				<td><?php echo $page_order; ?></td>
+				<td>Option 1<br>Option 2<br>Option 3<br>Option 4</td>
+				<td>0</td>
+				<td>2021-08-31</td>
 			 	<td>
           <div class="dropdown dropleft text-center">
             <button class="btn btn-outline-secondary btn-sm" type="button" data-toggle="dropdown">
               <i class="fas fa-fw fa-ellipsis-h"></i>
             </button>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="edit_page.php?page_id=<?php echo $page_id; ?>">Edit</a>
+              <a class="dropdown-item" href="edit_poll.php?poll_id=<?php echo $poll_id; ?>">Edit</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item text-danger" href="post.php?delete_page=<?php echo $page_id; ?>" class="btn btn-outline-danger">Delete</a>
+              <a class="dropdown-item text-danger" href="post.php?delete_poll=<?php echo $poll_id; ?>" class="btn btn-outline-danger">Delete</a>
             </div>
           </div>
         </td>

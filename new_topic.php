@@ -21,12 +21,10 @@
 <h2>New Topic</h2>
 <form method="post" action="post.php">
   <div class="form-group">
-    <label>Topic</label>
-    <input type="text" class="form-control" name="topic" autofocus required>
+    <input type="text" class="form-control form-control-lg" name="topic" placeholder="Title" autofocus required>
   </div>
   <div class="form-group">
-    <label>Body</label>
-    <textarea class="form-control" name="body" rows=5 required></textarea>
+    <textarea class="form-control" name="content" rows=8 required></textarea>
   </div>
   <button type="submit" name="new_topic" class="btn btn-primary">Post</button>
 </form>

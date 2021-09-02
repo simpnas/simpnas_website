@@ -2,6 +2,8 @@
 <?php include("config.php"); ?>
 <?php include("header.php"); ?>
 
+<?php if($config_module_forum_enabled == 1){ ?>
+
 <div class="row">
 	<div class="col-md-3 bg-light p-3" style="height: 1000px;">
 		<h3>Index</h3>
@@ -10,7 +12,7 @@
 
 		<?php
 
-			$query = mysqli_query($mysqli,"SELECT * FROM docs");
+			$query = mysqli_query($mysqli,"SELECT doc_id, doc_title FROM docs");
 
 			while($row = mysqli_fetch_array($query)){
 			
@@ -39,21 +41,43 @@
 				$row = mysqli_fetch_array($query);
 				
 				$title = $row['doc_title'];
-				$body = $row['doc_body'];
+				$content = $row['doc_content'];
 				$created_at = $row['doc_created_at'];
 				$updated_at = $row['doc_updated_at'];
 
 		?>
 				<h3><?php echo $title; ?></h3>
-				<small class="text-secondary">Created: <?php echo $created_at; ?> || Updated: <?php echo $updated_at; ?></small> 
+				<small class="text-secondary">Created: <?php echo $created_at; ?> <?php if(!empty($updated_at)){ ?> || Updated: <?php echo $updated_at; } ?></small> 
 				<hr>
-				<?php echo $body; ?>
+				<?php echo $content; ?>
 		<?php
+			}else{
+			  $query = mysqli_query($mysqli,"SELECT * FROM docs ORDER BY doc_id ASC LIMIT 1");
+			  
+			  $row = mysqli_fetch_array($query);
+			  
+			  $title = $row['doc_title'];
+				$content = $row['doc_content'];
+				$created_at = $row['doc_created_at'];
+				$updated_at = $row['doc_updated_at'];
+
+			  ?>
+				<h3><?php echo $title; ?></h3>
+				<small class="text-secondary">Created: <?php echo $created_at; ?> <?php if(!empty($updated_at)){ ?> || Updated: <?php echo $updated_at; } ?></small> 
+				<hr>
+				<?php echo $content; ?>
+			<?php
 			}
 
 		?>
 
 	</div>
 </div>
+
+<?php }else{ ?>
+
+404 Error (Module Not Enabled)
+
+<?php } ?>
 
 <?php include("footer.php"); ?>

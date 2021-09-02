@@ -40,7 +40,7 @@ if(isset($_GET['order'])){
 $url_query_strings_sb = http_build_query(array_merge($_GET,array('sortby' => $sortby, 'order' => $order)));
 
 $query = mysqli_query($mysqli,"SELECT SQL_CALC_FOUND_ROWS * FROM blog, users
-	WHERE blog.user_id = users.user_id
+	WHERE blog_by = user_id
 	AND (blog_title LIKE '%$search%')
 	ORDER BY $sortby $order
 	LIMIT $record_from, $record_to"); 
@@ -49,7 +49,7 @@ $num_rows = mysqli_fetch_row(mysqli_query($mysqli,"SELECT FOUND_ROWS()"));
 
 ?>
 
-<h1>Blogs</h1>
+<h1>Blog Posts</h1>
 
 <hr>
 
@@ -62,7 +62,7 @@ $num_rows = mysqli_fetch_row(mysqli_query($mysqli,"SELECT FOUND_ROWS()"));
 			</div>
 		</div>
 		<div class="col-md-2 mb-3">
-			<a href="add_blog.php" class="btn btn-primary btn-block">Add Blog</a>
+			<a href="add_blog.php" class="btn btn-primary btn-block">New Post</a>
 		</div>
 	</div>
 </form>
@@ -74,8 +74,8 @@ $num_rows = mysqli_fetch_row(mysqli_query($mysqli,"SELECT FOUND_ROWS()"));
 			<tr>
 				<th><a class="text-secondary" href="?<?php echo $url_query_strings_sb; ?>&sortby=blog_title&order=<?php echo $order; ?>">Title</a></th>
 				<th><a class="text-secondary" href="?<?php echo $url_query_strings_sb; ?>&sortby=blog_date&order=<?php echo $order; ?>">Date</a></th>
-				<th><a class="text-secondary" href="?<?php echo $url_query_strings_sb; ?>&sortby=user_email&order=<?php echo $order; ?>">Creater</a></th>
-				<th></th>
+				<th><a class="text-secondary" href="?<?php echo $url_query_strings_sb; ?>&sortby=user_name&order=<?php echo $order; ?>">Creater</a></th>
+				<th class="text-center">Action</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -87,7 +87,7 @@ $num_rows = mysqli_fetch_row(mysqli_query($mysqli,"SELECT FOUND_ROWS()"));
 			$blog_id = $row['blog_id'];
 			$title = $row['blog_title'];
 			$date = $row['blog_date'];
-			$email = $row['user_email'];
+			$name = $row['user_name'];
 
 			?>
 			
@@ -98,10 +98,19 @@ $num_rows = mysqli_fetch_row(mysqli_query($mysqli,"SELECT FOUND_ROWS()"));
 			 		</a>
 			 	</td>
 				<td><?php echo $date; ?></td>
-				<td><?php echo $email; ?></td>
-			 	<td class="text-center">	
-				 	<a href="post.php?delete_blog=<?php echo $blog_id; ?>" class="btn btn-outline-secondary">Delete</a>	
-			 	</td>
+				<td><?php echo $name; ?></td>
+			 	<td>
+          <div class="dropdown dropleft text-center">
+            <button class="btn btn-outline-secondary btn-sm" type="button" data-toggle="dropdown">
+              <i class="fas fa-fw fa-ellipsis-h"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="edit_blog.php?blog_id=<?php echo $blog_id; ?>">Edit</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item text-danger" href="post.php?delete_blog=<?php echo $blog_id; ?>" class="btn btn-outline-danger">Delete</a>
+            </div>
+          </div>
+        </td>
 			</tr>
 			
 			<?php 

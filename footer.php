@@ -1,22 +1,19 @@
-</main><!-- /.container -->
-<footer class="footer border-top" id="sticky-footer">
-  <div class="container">
-    <span class="text-muted">SimpNAS 2020</span>
-    <span class="float-right">Sponsored by <a href="https://pittpc.com">PittPC</a></span>
-  </div>
-</footer>
-<!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
+		</main><!-- /.container -->
+		<footer class="footer border-top" id="sticky-footer">
+		  <div class="container">
+		    <span class="text-muted"><?php echo $config_site_name; ?> <?php echo date(Y); ?></span>
+		    <span>
+		    	<?php if(!empty($config_social_github)){ ?><a href="<?php echo $config_social_github; ?>" target="_blank"><i class="fab fa-fw fa-github text-dark"></i></a><?php } ?>
+		    	<?php if(!empty($config_social_twitter)){ ?><a href="<?php echo $config_social_twitter; ?>" target="_blank"><i class="fab fa-fw fa-twitter text-dark"></i></a><?php } ?>
+		    	<?php if(!empty($config_social_reddit)){ ?><a href="<?php echo $config_social_reddit; ?>" target="_blank"><i class="fab fa-fw fa-reddit text-dark"></i></a><?php } ?>
+		    </span>
+		    <span class="float-right"><?php echo $config_footer_right; ?></span>
+		  </div>
+		</footer>
+
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script>
-		$(function(){
-			// Highlight the active nav link.
-			var url = window.location.pathname;
-			var filename = url.substr(url.lastIndexOf('/') + 1);
-			$('.nav-item a[href$="' + filename + '"]').addClass("active");
-		});
 
 		//Prevents resubmit on forms
 		if(window.history.replaceState){

@@ -1,3 +1,3 @@
 <?php
-  header('Location: blogs.php');
+  header('Location: users.php');
 ?>
