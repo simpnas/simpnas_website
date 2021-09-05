@@ -190,6 +190,44 @@ if(isset($_GET['delete_file'])){
   
 }
 
+if(isset($_POST['add_poll'])){
+	$name = trim(strip_tags(mysqli_real_escape_string($mysqli,$_POST['name'])));
+
+	mysqli_query($mysqli,"INSERT INTO polls SET poll_name = '$name', poll_created_at = NOW()") OR DIE("ERROR!");
+
+	header("Location: polls.php");
+
+}
+
+if(isset($_GET['delete_poll'])){
+	$poll_id = intval($_GET['delete_poll']);
+
+	mysqli_query($mysqli,"DELETE FROM poll_options WHERE option_poll_id = $poll_id");
+	mysqli_query($mysqli,"DELETE FROM polls WHERE poll_id = $poll_id");
+
+	header("Location: polls.php");
+
+}
+
+if(isset($_POST['add_option'])){
+	$poll_id = intval($_POST['poll_id']);
+	$name = trim(strip_tags(mysqli_real_escape_string($mysqli,$_POST['name'])));
+
+	mysqli_query($mysqli,"INSERT INTO poll_options SET option_name = '$name', option_poll_id = $poll_id") OR DIE("ERROR!");
+
+	header("Location: poll_options.php?poll_id=$poll_id");
+
+}
+
+if(isset($_GET['delete_option'])){
+	$option_id = intval($_GET['delete_option']);
+
+	mysqli_query($mysqli,"DELETE FROM poll_options WHERE option_id = $option_id");
+
+	header("Location: " . $_SERVER["HTTP_REFERER"]);
+
+}
+
 if(isset($_POST['add_user'])){
 	$name = trim(strip_tags(mysqli_real_escape_string($mysqli,$_POST['name'])));
 	$email = trim(strip_tags(mysqli_real_escape_string($mysqli,$_POST['email'])));

@@ -107,7 +107,8 @@ $num_rows = mysqli_fetch_row(mysqli_query($mysqli,"SELECT FOUND_ROWS()"));
               <i class="fas fa-fw fa-ellipsis-h"></i>
             </button>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="edit_poll.php?poll_id=<?php echo $poll_id; ?>">Edit</a>
+              <a class="dropdown-item" href="poll_options.php?poll_id=<?php echo $poll_id; ?>">Options</a>
+              <a class="dropdown-item" href="vote.php?poll_id=<?php echo $poll_id; ?>">Vote</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item text-danger" href="post.php?delete_poll=<?php echo $poll_id; ?>" class="btn btn-outline-danger">Delete</a>
             </div>

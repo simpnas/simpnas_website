@@ -18,18 +18,6 @@ include("nav.php");
 	<div class="form-group">
 		<input type="text" class="form-control form-control-lg" name="name" placeholder="Poll Name" required autofocus>
 	</div>
-	<div class="form-group">
-		<input type="text" class="form-control form-control-lg" name="option[]" placeholder="Option 1" required>
-	</div>
-	<div class="form-group">
-		<input type="text" class="form-control form-control-lg" name="option[]" placeholder="Option 2" required>
-	</div>
-	<div class="form-group">
-		<input type="text" class="form-control form-control-lg" name="option[]" placeholder="Option 3">
-	</div>
-	<div class="form-group">
-		<input type="text" class="form-control form-control-lg" name="option[]" placeholder="Option 4">
-	</div>
 	<button type="submit" class="btn btn-primary btn-lg btn-block" name="add_poll">Create</button>
 </form>
 
