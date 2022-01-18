@@ -2,7 +2,7 @@
 <?php include("config.php"); ?>
 <?php include("header.php"); ?>
 
-<?php if($config_module_forum_enabled == 1){ ?>
+<?php if($config_module_docs_enabled == 1){ ?>
 
 <div class="row">
 	<div class="col-md-3 bg-light p-3" style="height: 1000px;">

@@ -228,6 +228,48 @@ if(isset($_GET['delete_option'])){
 
 }
 
+//Forms
+
+if(isset($_POST['add_form'])){
+	$name = trim(strip_tags(mysqli_real_escape_string($mysqli,$_POST['name'])));
+
+	mysqli_query($mysqli,"INSERT INTO forms SET form_name = '$name', form_created_at = NOW()") OR DIE("ERROR!");
+
+	header("Location: " . $_SERVER["HTTP_REFERER"]);
+
+}
+
+if(isset($_GET['delete_form'])){
+	$form_id = intval($_GET['delete_form']);
+
+	mysqli_query($mysqli,"DELETE FROM form_fields WHERE field_form_id = $form_id");
+	mysqli_query($mysqli,"DELETE FROM forms WHERE form_id = $form_id");
+
+	header("Location: " . $_SERVER["HTTP_REFERER"]);
+
+}
+
+if(isset($_POST['add_field'])){
+	$form_id = intval($_POST['form_id']);
+	$name = trim(strip_tags(mysqli_real_escape_string($mysqli,$_POST['name'])));
+	$type = trim(strip_tags(mysqli_real_escape_string($mysqli,$_POST['type'])));
+	$options = trim(strip_tags(mysqli_real_escape_string($mysqli,$_POST['options'])));
+
+	mysqli_query($mysqli,"INSERT INTO form_fields SET field_name = '$name', field_type = '$type', field_options = '$options', field_form_id = $form_id") OR DIE("ERROR!");
+
+	header("Location: " . $_SERVER["HTTP_REFERER"]);
+
+}
+
+if(isset($_GET['delete_field'])){
+	$field_id = intval($_GET['delete_field']);
+
+	mysqli_query($mysqli,"DELETE FROM form_fields WHERE field_id = $field_id");
+
+	header("Location: " . $_SERVER["HTTP_REFERER"]);
+
+}
+
 if(isset($_POST['add_user'])){
 	$name = trim(strip_tags(mysqli_real_escape_string($mysqli,$_POST['name'])));
 	$email = trim(strip_tags(mysqli_real_escape_string($mysqli,$_POST['email'])));

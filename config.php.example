@@ -30,6 +30,7 @@
 	$config_module_forum_enabled = 1;
 	$config_module_blog_enabled = 1;
 	$config_module_polls_enabled = 1;
+	$config_module_forms_enabled = 1;
 	$config_module_uploads_enabled = 1;
 	$config_module_stats_enabled = 1;
 	$config_module_user_registration_enabled = 1;
