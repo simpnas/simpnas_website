@@ -48,7 +48,7 @@ $num_rows = mysqli_fetch_row(mysqli_query($mysqli,"SELECT FOUND_ROWS()"));
 
 ?>
 
-<h1>Links</h1>
+<h1>Categories</h1>
 
 <hr>
 
