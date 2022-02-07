@@ -24,7 +24,7 @@ if(isset($_GET['search'])){
 if(isset($_GET['sortby'])){
   $sortby = mysqli_real_escape_string($mysqli,$_GET['sortby']);
 }else{
-  $sortby = "doc_title";
+  $sortby = "category_name";
 }
 
 if(isset($_GET['order'])){
@@ -39,9 +39,8 @@ if(isset($_GET['order'])){
 
 $url_query_strings_sb = http_build_query(array_merge($_GET,array('sortby' => $sortby, 'order' => $order)));
 
-$query = mysqli_query($mysqli,"SELECT SQL_CALC_FOUND_ROWS * FROM docs
-	LEFT JOIN categories ON category_id = doc_category_id
-	WHERE doc_title LIKE '%$search%' AND category_name LIKE '%$search%'
+$query = mysqli_query($mysqli,"SELECT SQL_CALC_FOUND_ROWS * FROM categories
+	WHERE category_name LIKE '%$search%'
 	ORDER BY $sortby $order
 	LIMIT $record_from, $record_to"); 
 
@@ -49,7 +48,7 @@ $num_rows = mysqli_fetch_row(mysqli_query($mysqli,"SELECT FOUND_ROWS()"));
 
 ?>
 
-<h1>Docs</h1>
+<h1>Links</h1>
 
 <hr>
 
@@ -62,7 +61,7 @@ $num_rows = mysqli_fetch_row(mysqli_query($mysqli,"SELECT FOUND_ROWS()"));
 			</div>
 		</div>
 		<div class="col-md-2 mb-3">
-			<a href="add_doc.php" class="btn btn-primary btn-block">New Doc</a>
+			<a href="add_category.php" class="btn btn-primary btn-block">New Category</a>
 		</div>
 	</div>
 </form>
@@ -72,10 +71,7 @@ $num_rows = mysqli_fetch_row(mysqli_query($mysqli,"SELECT FOUND_ROWS()"));
 	<table class="table border">
 		<thead class="thead-light">
 			<tr>
-				<th><a class="text-secondary" href="?<?php echo $url_query_strings_sb; ?>&sortby=doc_title&order=<?php echo $order; ?>">Title</a></th>
-				<th><a class="text-secondary" href="?<?php echo $url_query_strings_sb; ?>&sortby=doc_created_at&order=<?php echo $order; ?>">Created</a></th>
-				<th><a class="text-secondary" href="?<?php echo $url_query_strings_sb; ?>&sortby=doc_updated_at&order=<?php echo $order; ?>">Updated</a></th>
-				<th><a class="text-secondary" href="?<?php echo $url_query_strings_sb; ?>&sortby=category_name&order=<?php echo $order; ?>">Category</a></th>
+				<th><a class="text-secondary" href="?<?php echo $url_query_strings_sb; ?>&sortby=category_name&order=<?php echo $order; ?>">Name</a></th>
 				<th class="text-center">Action</th>
 			</tr>
 		</thead>
@@ -85,36 +81,26 @@ $num_rows = mysqli_fetch_row(mysqli_query($mysqli,"SELECT FOUND_ROWS()"));
 
 			while($row = mysqli_fetch_array($query)){
 			
-			$doc_id = $row['doc_id'];
-			$title = $row['doc_title'];
-			$url_title = $row['doc_url_title'];
-			$created_at = $row['doc_created_at'];
-			$updated_at = $row['doc_updated_at'];
 			$category_id = $row['category_id'];
-			$category_name = $row['category_name'];
+			$name = $row['category_name'];
 		
 			?>
 			
 			<tr>	
 				<td>
-			 		<a href="edit_doc.php?doc_id=<?php echo $doc_id; ?>">
-			 			<?php echo $title; ?>
+			 		<a href="edit_category.php?category_id=<?php echo $category_id; ?>">
+			 			<?php echo $name; ?>
 			 		</a>
-			 		<br>
-			 		<small class="text-secondary mt-1"><?php echo $url_title ?></small>
 			 	</td>
-				<td><?php echo $created_at; ?></td>
-				<td><?php echo $updated_at; ?></td>
-				<td><?php echo $category_name; ?></td>
 			 	<td>
           <div class="dropdown dropleft text-center">
             <button class="btn btn-outline-secondary btn-sm" type="button" data-toggle="dropdown">
               <i class="fas fa-fw fa-ellipsis-h"></i>
             </button>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="edit_doc.php?doc_id=<?php echo $doc_id; ?>">Edit</a>
+              <a class="dropdown-item" href="edit_category.php?category_id=<?php echo $category_id; ?>">Edit</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item text-danger" href="post.php?delete_doc=<?php echo $doc_id; ?>" class="btn btn-outline-danger">Delete</a>
+              <a class="dropdown-item text-danger" href="post.php?delete_category=<?php echo $category_id; ?>" class="btn btn-outline-danger">Delete</a>
             </div>
           </div>
         </td>

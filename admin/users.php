@@ -41,7 +41,7 @@ $url_query_strings_sb = http_build_query(array_merge($_GET,array('sortby' => $so
 
 $query = mysqli_query($mysqli,"SELECT SQL_CALC_FOUND_ROWS * FROM users
 	LEFT JOIN events ON user_id = event_user_id
-	WHERE user_name LIKE '%$search%' OR user_email LIKE '%$search%'
+	WHERE user_name LIKE '%$search%' OR user_email LIKE '%$search%' OR event_ip LIKE '%$search%'
 	ORDER BY $sortby $order
 	LIMIT $record_from, $record_to"); 
 
@@ -74,8 +74,8 @@ $num_rows = mysqli_fetch_row(mysqli_query($mysqli,"SELECT FOUND_ROWS()"));
 		<thead class="thead-light">
 			<tr>
 				<th><a class="text-secondary" href="?<?php echo $url_query_strings_sb; ?>&sortby=user_name&order=<?php echo $order; ?>">User</a></th>
-				<th>IP</th>
-				<th>Browser</th>
+				<th><a class="text-secondary" href="?<?php echo $url_query_strings_sb; ?>&sortby=event_ip&order=<?php echo $order; ?>">IP</a></th>
+				<th><a class="text-secondary" href="?<?php echo $url_query_strings_sb; ?>&sortby=event_user_agent&order=<?php echo $order; ?>">User Agent</a></th>
 				<th><a class="text-secondary" href="?<?php echo $url_query_strings_sb; ?>&sortby=user_access&order=<?php echo $order; ?>">Access</a></th>
 				<th>Last Active</th>
 				<th class="text-center">Action</th>

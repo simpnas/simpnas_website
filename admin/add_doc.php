@@ -21,6 +21,29 @@ include("nav.php");
 	<div class="form-group">
 		<textarea class="form-control" id="summernote" name="content"></textarea>
 	</div>
+	<div class="form-group">
+		<select class="form-control form-control-lg" name="category" required>
+			<option value="">Select a Category</option>
+			<?php
+      
+      $sql = mysqli_query($mysqli,"SELECT * FROM categories ORDER BY category_name ASC");
+
+      while($row = mysqli_fetch_array($sql)){
+        $category_id = $row['category_id'];
+        $category_name = $row['category_name'];
+	    
+	    ?>
+	    
+	    <option value="<?php echo $category_id; ?>"><?php echo $category_name; ?></option>
+	    
+	    <?php
+	  	
+	  	}
+
+	  	?>
+
+	  </select>
+	</div>
 	<button type="submit" class="btn btn-primary btn-lg btn-block" name="add_doc">Create</button>
 </form>
 

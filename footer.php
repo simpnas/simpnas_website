@@ -1,7 +1,7 @@
 		</main><!-- /.container -->
 		<footer class="footer border-top" id="sticky-footer">
 		  <div class="container">
-		    <span class="text-muted"><?php echo $config_site_name; ?> <?php echo date(Y); ?></span>
+		    <span class="text-muted"><?php echo $config_site_name; ?> <?php echo date('Y'); ?></span>
 		    <span>
 		    	<?php if(!empty($config_social_github)){ ?><a href="<?php echo $config_social_github; ?>" target="_blank"><i class="fab fa-fw fa-github text-dark"></i></a><?php } ?>
 		    	<?php if(!empty($config_social_twitter)){ ?><a href="<?php echo $config_social_twitter; ?>" target="_blank"><i class="fab fa-fw fa-twitter text-dark"></i></a><?php } ?>

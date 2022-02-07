@@ -15,6 +15,7 @@ if(isset($_GET['doc_id'])){
 	
 	$title = $row['doc_title'];
 	$content = $row['doc_content'];
+	$category_id = $row['doc_category_id'];
 
 ?>
 
@@ -41,6 +42,29 @@ if(isset($_GET['doc_id'])){
 	</div>
 	<div class="form-group">
 		<textarea class="form-control" id="summernote" name="content"><?php echo $content; ?></textarea>
+	</div>
+	<div class="form-group">	
+		<select class="form-control form-control-lg" name="category" required>
+			<option value="">Select a Category</option>
+			<?php
+      
+      $sql_select = mysqli_query($mysqli,"SELECT * FROM categories ORDER BY category_name ASC");
+
+      while($row = mysqli_fetch_array($sql_select)){
+        $category_id_select = $row['category_id'];
+        $category_name_select = $row['category_name'];
+	    
+	    ?>
+	    
+	    <option <?php if($category_id == $category_id_select){ echo "selected"; } ?> value="<?php echo $category_id_select; ?>"><?php echo $category_name_select; ?></option>
+	    
+	    <?php
+	  	
+	  	}
+
+	  	?>
+
+	  </select>
 	</div>
 	<button type="submit" class="btn btn-primary btn-lg btn-block" name="edit_doc">Save</button>
 </form>

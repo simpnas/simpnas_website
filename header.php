@@ -12,7 +12,7 @@
     <meta name="author" content="<?php echo $config_meta_author; ?>">
     <link rel="icon" href="favicon.ico">
 
-    <title><?php echo $config_site_name; ?></title>
+    <title><?php echo $config_site_name; ?> <?php if(isset($page_title)){ echo "| $page_title"; } ?></title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">

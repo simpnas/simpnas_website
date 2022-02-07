@@ -5,7 +5,7 @@ if(isset($_POST['register'])){
     
   $username = strip_tags(mysqli_real_escape_string($mysqli,$_POST['username']));
   $email = strip_tags(mysqli_real_escape_string($mysqli,$_POST['email']));
-  $password = md5($_POST['password']);
+  $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
   $answer = intval($_POST['answer']);
   $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
   $user_agent = $_SERVER['HTTP_USER_AGENT'];

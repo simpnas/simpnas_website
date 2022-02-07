@@ -4,19 +4,19 @@ include("../config.php");
 
 if(isset($_POST['login'])){
   
-	$email = trim(strip_tags(mysqli_real_escape_string($mysqli,$_POST['email'])));
-	$password = md5($_POST['password']);
+	session_start();
 
-	$sql = mysqli_query($mysqli,"SELECT * FROM users WHERE user_email = '$email' AND user_password = '$password' AND user_access > 0");
+  $email = trim(strip_tags(mysqli_real_escape_string($mysqli,$_POST['email'])));
+  $password = trim($_POST['password']);
 
-	if(mysqli_num_rows($sql) == 1){
-		$row = mysqli_fetch_array($sql);
-		$_SESSION['user_id'] = $row['user_id'];
-		$_SESSION['user_email'] = $row['user_email'];
-		$_SESSION['user_access'] = $row['user_access'];
-		  
-		header("Location: index.php");
-
+  $sql = mysqli_query($mysqli,"SELECT * FROM users WHERE user_email = '$email' AND user_access > 0");
+  $row = mysqli_fetch_array($sql);
+  if(password_verify($password, $row['user_password'])){
+    $_SESSION['logged'] = TRUE;
+    $_SESSION['user_id'] = $row['user_id'];
+    $_SESSION['user_email'] = $row['user_email'];
+    $_SESSION['user_access'] = $row['user_access'];
+    header("Location: index.php");
 	}else{
 
 		$_SESSION['response'] = "
@@ -79,7 +79,7 @@ if(isset($_POST['forgot_password'])){
 if(isset($_POST['reset_password'])){
   
 	$user_id = intval($_POST['user_id']);
-	$password = md5($_POST['password']);
+	$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
 	mysqli_query($mysqli,"UPDATE users SET user_password = '$password', user_token = NULL WHERE user_id = $user_id");
 

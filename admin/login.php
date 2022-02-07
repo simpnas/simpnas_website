@@ -3,8 +3,6 @@
 include("../config.php");
 include("header.php");
 
-session_start();	
-
 ?>
 
 <h1 class="text-center">Admin Login</h1>
@@ -30,7 +28,9 @@ session_start();
 	</div>
 	
 	<button type="submit" class="btn btn-primary mr-2" name="login">Login</button>
-	<!-- <a href="forgot_password.php">Forgot Password</a> -->
+	<?php if($config_module_forgot_password_enabled = 1){ ?>
+		<a href="forgot_password.php">Forgot Password</a>
+	<?php } ?>
 
 </form>
 

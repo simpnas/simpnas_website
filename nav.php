@@ -47,7 +47,7 @@
       <?php } ?>
       <?php if($config_module_forum_enabled == 1){ ?>
       <li class="nav-item">
-        <a class="nav-link <?php if(basename($_SERVER["PHP_SELF"]) == "forums.php" OR basename($_SERVER["PHP_SELF"]) == "post_details.php" OR basename($_SERVER["PHP_SELF"]) == "new_topic.php") { echo "active"; } ?>" href="forums.php">Forums</a>
+        <a class="nav-link <?php if(basename($_SERVER["PHP_SELF"]) == "forum.php" OR basename($_SERVER["PHP_SELF"]) == "post_details.php" OR basename($_SERVER["PHP_SELF"]) == "new_topic.php") { echo "active"; } ?>" href="forum.php">Forum</a>
       </li>
       <?php } ?>
       <?php if($config_module_blog_enabled == 1){ ?>
@@ -73,7 +73,7 @@
     <ul class="navbar-nav ml-auto">
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
-          <i class="fas fa-fw fa-user"></i> <?php echo $session_username; ?>
+          <i class="fas fa-fw fa-user"></i> <?php echo $session_user_name; ?>
         </a>
         
         

@@ -1,13 +1,15 @@
 <?php
-	
+
+include("functions.php");
 include("../config.php");
 include("check_login.php");
 
 if(isset($_POST['add_blog'])){
 	$title = trim(strip_tags(mysqli_real_escape_string($mysqli,$_POST['title'])));
 	$content = trim(mysqli_real_escape_string($mysqli,$_POST['content']));
+	$url_title = SeoUrl($title);
 
-	mysqli_query($mysqli,"INSERT INTO blog SET blog_title = '$title', blog_content = '$content', blog_date = NOW(), blog_by = $session_user_id") OR DIE("ERROR!");
+	mysqli_query($mysqli,"INSERT INTO blog SET blog_title = '$title', blog_url_title = '$url_title', blog_content = '$content', blog_date = NOW(), blog_by = $session_user_id") OR DIE("ERROR!");
 
 	header("Location: blogs.php");
 
@@ -17,8 +19,9 @@ if(isset($_POST['edit_blog'])){
 	$blog_id = intval($_POST['blog_id']);
 	$title = trim(strip_tags(mysqli_real_escape_string($mysqli,$_POST['title'])));
 	$content = trim(mysqli_real_escape_string($mysqli,$_POST['content']));
+	$url_title = SeoUrl($title);
 
-	mysqli_query($mysqli,"UPDATE blog SET blog_title = '$title', blog_content = '$content' WHERE blog_id = $blog_id");
+	mysqli_query($mysqli,"UPDATE blog SET blog_title = '$title', blog_url_title = '$url_title', blog_content = '$content' WHERE blog_id = $blog_id");
 
 	$_SESSION['response'] = "
 		<div class='alert alert-info'>
@@ -45,8 +48,10 @@ if(isset($_GET['delete_blog'])){
 if(isset($_POST['add_doc'])){
 	$title = trim(strip_tags(mysqli_real_escape_string($mysqli,$_POST['title'])));
 	$content = trim(mysqli_real_escape_string($mysqli,$_POST['content']));
+	$category_id = intval($_POST['category']);
+	$url_title = SeoUrl($title);
 
-	mysqli_query($mysqli,"INSERT INTO docs SET doc_title = '$title', doc_content = '$content', doc_created_at = NOW(), doc_category_id = 1") OR DIE("ERROR!");
+	mysqli_query($mysqli,"INSERT INTO docs SET doc_url_title = '$url_title', doc_title = '$title', doc_content = '$content', doc_created_by = $session_user_id, doc_created_at = NOW(), doc_category_id = $category_id") OR DIE("ERROR!");
 
 	header("Location: docs.php");
 
@@ -56,8 +61,10 @@ if(isset($_POST['edit_doc'])){
 	$doc_id = intval($_POST['doc_id']);
 	$title = trim(strip_tags(mysqli_real_escape_string($mysqli,$_POST['title'])));
 	$content = trim(mysqli_real_escape_string($mysqli,$_POST['content']));
+	$category_id = intval($_POST['category']);
+	$url_title = SeoUrl($title);
 
-	mysqli_query($mysqli,"UPDATE docs SET doc_title = '$title', doc_content = '$content', doc_updated_at = NOW() WHERE doc_id = $doc_id");
+	mysqli_query($mysqli,"UPDATE docs SET doc_url_title = '$url_title', doc_title = '$title', doc_content = '$content', doc_updated_by = $session_user_id, doc_updated_at = NOW(), doc_category_id = $category_id WHERE doc_id = $doc_id");
 
 	$_SESSION['response'] = "
 		<div class='alert alert-info'>
@@ -85,8 +92,9 @@ if(isset($_POST['add_page'])){
 	$order = intval($_POST['order']);
 	$title = trim(strip_tags(mysqli_real_escape_string($mysqli,$_POST['title'])));
 	$content = trim(mysqli_real_escape_string($mysqli,$_POST['content']));
+	$url_title = SeoUrl($title);
 
-	mysqli_query($mysqli,"INSERT INTO pages SET page_title = '$title', page_content = '$content', page_order = $order, page_created_at = NOW(), page_created_by = $session_user_id, page_active = 1") OR DIE("ERROR!");
+	mysqli_query($mysqli,"INSERT INTO pages SET page_title = '$title', page_url_title = '$url_title', page_content = '$content', page_order = $order, page_created_at = NOW(), page_created_by = $session_user_id, page_active = 1") OR DIE("ERROR!");
 
 	header("Location: pages.php");
 
@@ -96,8 +104,9 @@ if(isset($_POST['edit_page'])){
 	$page_id = intval($_POST['page_id']);
 	$title = trim(strip_tags(mysqli_real_escape_string($mysqli,$_POST['title'])));
 	$content = trim(mysqli_real_escape_string($mysqli,$_POST['content']));
+	$url_title = SeoUrl($title);
 
-	mysqli_query($mysqli,"UPDATE pages SET page_title = '$title', page_content = '$content', page_updated_at = NOW() WHERE page_id = $page_id");
+	mysqli_query($mysqli,"UPDATE pages SET page_title = '$title', page_url_title = '$url_title', page_content = '$content', page_updated_at = NOW() WHERE page_id = $page_id");
 
 	$_SESSION['response'] = "
 		<div class='alert alert-info'>
@@ -147,7 +156,7 @@ if(isset($_POST['edit_link'])){
 		</div>
 	";
 
-	header("Location: edit_link.php?link_id=$link_id");
+	header("Location: links.php");
 
 }
 
@@ -157,6 +166,52 @@ if(isset($_GET['delete_link'])){
 	mysqli_query($mysqli,"DELETE FROM links WHERE link_id = $link_id");
 
 	header("Location: links.php");
+
+}
+
+if(isset($_POST['add_category'])){
+	$name = trim(strip_tags(mysqli_real_escape_string($mysqli,$_POST['name'])));
+
+	mysqli_query($mysqli,"INSERT INTO categories SET category_name = '$name'") OR DIE("ERROR!");
+
+	header("Location: categories.php");
+
+}
+
+if(isset($_POST['edit_category'])){
+	$category_id = intval($_POST['category_id']);
+	$name = trim(strip_tags(mysqli_real_escape_string($mysqli,$_POST['name'])));
+
+	mysqli_query($mysqli,"UPDATE categories SET category_name = '$name' WHERE category_id = $category_id");
+
+	$_SESSION['response'] = "
+		<div class='alert alert-info'>
+		    Category updated.
+		    <button class='close' data-dismiss='alert'>
+				<span>&times;</span>
+			</button>
+		</div>
+	";
+
+	header("Location: categories.php");
+
+}
+
+if(isset($_GET['delete_category'])){
+	$category_id = intval($_GET['delete_category']);
+
+	mysqli_query($mysqli,"DELETE FROM categories WHERE category_id = $category_id");
+
+	$_SESSION['response'] = "
+		<div class='alert alert-danger'>
+		    Category deleted.
+		    <button class='close' data-dismiss='alert'>
+				<span>&times;</span>
+			</button>
+		</div>
+	";
+
+	header("Location: categories.php");
 
 }
 
@@ -273,7 +328,7 @@ if(isset($_GET['delete_field'])){
 if(isset($_POST['add_user'])){
 	$name = trim(strip_tags(mysqli_real_escape_string($mysqli,$_POST['name'])));
 	$email = trim(strip_tags(mysqli_real_escape_string($mysqli,$_POST['email'])));
-	$password = md5($_POST['password']);
+	$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 	$access = intval($_POST['access']);
 
 	mysqli_query($mysqli,"INSERT INTO users SET user_name = '$name', user_email = '$email', user_password = '$password', user_access = $access");
@@ -301,11 +356,11 @@ if(isset($_POST['edit_user'])){
 	mysqli_query($mysqli,"UPDATE users SET user_name = '$name', user_email = '$email', user_access = $access WHERE user_id = $user_id");
 
 	if(!empty($password)){
-      $password = md5($password);
+      $password = password_hash($password, PASSWORD_DEFAULT);
       mysqli_query($mysqli,"UPDATE users SET user_password = '$password' WHERE user_id = $user_id");
   }
 
-	header("Location: edit_user.php?user_id=$user_id");
+	header("Location: users.php");
 
 }
 

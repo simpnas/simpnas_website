@@ -13,15 +13,14 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-    <li class="breadcrumb-item"><a href="forums.php">Forums</a></li>
+    <li class="breadcrumb-item"><a href="forum.php">Forum</a></li>
     <li class="breadcrumb-item active" aria-current="page">New Topic</li>
   </ol>
 </nav>
 
-<h2>New Topic</h2>
 <form method="post" action="post.php">
   <div class="form-group">
-    <input type="text" class="form-control form-control-lg" name="topic" placeholder="Title" autofocus required>
+    <input type="text" class="form-control form-control-lg" name="title" placeholder="Title" autofocus required>
   </div>
   <div class="form-group">
     <textarea class="form-control" name="content" rows=8 required></textarea>

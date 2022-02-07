@@ -1,8 +1,10 @@
 <?php 
+
+$page_title = "Forum"; 
 	
-include "config.php";
-include "header.php"; 
-include "check_login.php";
+include("config.php");
+include("header.php"); 
+include("check_login.php");
 
 if($config_module_forum_enabled == 1){
 
@@ -11,7 +13,7 @@ $sql = mysqli_query($mysqli,"SELECT * FROM posts, users WHERE user_id = post_by 
 ?>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-2">
-	<h2>Forums</h2>
+	<h2>Forum</h2>
 	<?php if($_SESSION['logged']){ ?>
 	<a href="new_topic.php" class="btn btn-outline-primary">New Topic</a>
 	<?php } ?>
@@ -33,7 +35,8 @@ $sql = mysqli_query($mysqli,"SELECT * FROM posts, users WHERE user_id = post_by 
 				while($row = mysqli_fetch_array($sql)){
           $post_id = $row['post_id'];
           $username = $row['user_name'];
-          $post_topic = $row['post_topic'];
+          $post_title = $row['post_title'];
+          $post_title_url = $row['post_title_url'];
           $post_date = date($config_date_time_format, strtotime($row['post_date']));
           
           $sql_replies = mysqli_query($mysqli,"SELECT * FROM replies, users WHERE users.user_id = replies.reply_by AND post_id = $post_id ORDER BY reply_id DESC");
@@ -46,7 +49,7 @@ $sql = mysqli_query($mysqli,"SELECT * FROM posts, users WHERE user_id = post_by 
 	        ?>
 						<tr>
 							<td>
-								<a href="post_details.php?post_id=<?php echo $post_id; ?>"><?php echo $post_topic; ?></a>
+								<a href="post_details.php?topic=<?php echo $post_title_url; ?>"><?php echo $post_title; ?></a>
 								<p class="text-secondary">by <?php echo $username; ?> <?php echo $post_date; ?></p>
 							</td>
 							<td><?php echo $replies; ?></td>

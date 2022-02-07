@@ -22,6 +22,9 @@
       <?php } ?>
       <?php if($config_module_docs_enabled == 1){ ?>
       <li class="nav-item">
+        <a class="nav-link <?php if(basename($_SERVER["PHP_SELF"]) == "categories.php" OR basename($_SERVER["PHP_SELF"]) == "add_category.php" OR basename($_SERVER["PHP_SELF"]) == "edit_category.php") { echo "active"; } ?>" href="categories.php">Categories</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link <?php if(basename($_SERVER["PHP_SELF"]) == "docs.php" OR basename($_SERVER["PHP_SELF"]) == "add_doc.php" OR basename($_SERVER["PHP_SELF"]) == "edit_doc.php") { echo "active"; } ?>" href="docs.php">Docs</a>
       </li>
       <?php } ?>

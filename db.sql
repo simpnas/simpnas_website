@@ -1,8 +1,8 @@
--- MariaDB dump 10.19  Distrib 10.5.12-MariaDB, for debian-linux-gnu (x86_64)
+-- MariaDB dump 10.19  Distrib 10.5.13-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: johnny_simpnas
 -- ------------------------------------------------------
--- Server version	10.5.12-MariaDB-1:10.5.12+maria~focal
+-- Server version	10.5.13-MariaDB-1:10.5.13+maria~focal
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -56,8 +56,11 @@ DROP TABLE IF EXISTS `docs`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `docs` (
   `doc_id` int(11) NOT NULL AUTO_INCREMENT,
+  `doc_url_title` varchar(200) NOT NULL,
   `doc_title` varchar(200) NOT NULL,
   `doc_content` longtext NOT NULL,
+  `doc_created_by` int(11) NOT NULL,
+  `doc_updated_by` int(11) DEFAULT NULL,
   `doc_created_at` datetime NOT NULL,
   `doc_updated_at` datetime DEFAULT NULL,
   `doc_category_id` int(11) NOT NULL,
@@ -98,6 +101,69 @@ CREATE TABLE `files` (
   `file_name` varchar(250) NOT NULL,
   `file_uploaded_at` datetime NOT NULL,
   PRIMARY KEY (`file_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `form_fields`
+--
+
+DROP TABLE IF EXISTS `form_fields`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `form_fields` (
+  `field_id` int(11) NOT NULL AUTO_INCREMENT,
+  `field_type` varchar(200) NOT NULL,
+  `field_options` text DEFAULT NULL,
+  `field_form_id` int(11) NOT NULL,
+  `field_name` varchar(250) NOT NULL,
+  PRIMARY KEY (`field_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `form_values`
+--
+
+DROP TABLE IF EXISTS `form_values`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `form_values` (
+  `value_id` int(11) NOT NULL AUTO_INCREMENT,
+  `value_data` text NOT NULL,
+  `value_created_at` datetime NOT NULL,
+  `value_field_id` int(11) NOT NULL,
+  PRIMARY KEY (`value_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `forms`
+--
+
+DROP TABLE IF EXISTS `forms`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `forms` (
+  `form_id` int(11) NOT NULL AUTO_INCREMENT,
+  `form_name` varchar(250) NOT NULL,
+  `form_created_at` datetime NOT NULL,
+  PRIMARY KEY (`form_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `links`
+--
+
+DROP TABLE IF EXISTS `links`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `links` (
+  `link_id` int(11) NOT NULL AUTO_INCREMENT,
+  `link_name` varchar(250) NOT NULL,
+  `link_url` varchar(250) NOT NULL,
+  PRIMARY KEY (`link_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -178,7 +244,8 @@ DROP TABLE IF EXISTS `posts`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `posts` (
   `post_id` int(11) NOT NULL AUTO_INCREMENT,
-  `post_topic` varchar(200) NOT NULL,
+  `post_title` varchar(200) NOT NULL,
+  `post_title_url` varchar(200) NOT NULL,
   `post_content` longtext NOT NULL,
   `post_date` datetime NOT NULL,
   `post_by` int(11) NOT NULL,
@@ -284,4 +351,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-09-02 13:55:26
+-- Dump completed on 2022-02-06 21:24:56

@@ -1,6 +1,8 @@
-<?php include("header.php"); ?>
-
 <?php 
+
+$page_title = "Blog";
+
+include("header.php");
 
 if($config_module_blog_enabled == 1){
   
@@ -10,6 +12,7 @@ if($config_module_blog_enabled == 1){
 
     $blog_id = $row['blog_id'];
     $title = $row['blog_title'];
+    $url_title = $row['url_title'];
     $content = $row['blog_content'];
     $date = $row['blog_date'];
     $email = $row['user_email'];
